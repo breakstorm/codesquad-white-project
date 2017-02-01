@@ -3,12 +3,14 @@
  2. 포트폴리오 사이트(Amazon 상품표시 변형)
  3. LOL 프로경기 정보 사이트
 
-#본 프로젝트 진행시 목표  
+##프로젝트 진행시 목표  
  - 적당한 난이도의 프로그램을 많이 작성한다.
  - 하고 싶은 프로젝트를 한다. === 재미있게 한다.
  - 실제 개발을 할때의 경험을 체험한다. 
 
-
+##프로젝트 BackLog
+ - 링크 : [구글드라이브](https://docs.google.com/spreadsheets/d/1CuQO75AM2gPup-clRXhXNKwjIfEfa1CMokcL6Pw3awU/edit?usp=sharing)
+ 
 ----
    
 #ToDo List Advance
@@ -86,4 +88,25 @@
 ###구현할 기능
   - 일자별 LOL 순위 변경 내역
 
+---
 
+#### github 프로젝트 생성
+: pdf6 참고
+
+#### backlog
+- To Do List => 세분화된 tasks
+- 한 번에 한눈에 보이게 작성 (예. excel 활용)
+
+#### github issue 올리기
+- backlog를 issue에 업로드
+- label을 활용(질문 및 기타)
+- 어떤 타입의 일인지 일의 종류를 구분
+
+#### To Do
+1. [1월 31일] 각자 `backlog` 만들기 
+2. [1월 31일] 각자 `github issue` 올리기
+3. [2월 1일] 각자의 `backlog` 공유한 후 공통적인 부분 추출하기 
+4. 조별 활동
+    - [1차 활동] 2월 1일 오후 3시.
+    - [예정 활동] 각자 코드 리뷰
+    - [예정 활동] 회고 시간(매주 목요일)
