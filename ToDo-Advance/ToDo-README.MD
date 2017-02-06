@@ -1,3 +1,9 @@
+#구현 기술 스펙
+ 1. 언어 : javascript, HTML, CSS
+ 2. 라이브러리 및 기술 : 로컬 스토리지, chart.js
+
+
+
 #로컬스토리지 사용
 참고사이트 : http://ohgyun.com/417
 참고사이트 : https://developer.mozilla.org/en/docs/Web/API/Window/localStorage

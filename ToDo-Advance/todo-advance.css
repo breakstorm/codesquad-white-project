@@ -1,17 +1,24 @@
 
+
+
+
+
+
+/*//////////////////////////////////////////////////////////////////////////////////////////*/
 /* Include the padding and border in an element's total width and height */
-* {
+/** {
     box-sizing: border-box;
-}
+}*/
 
 /* Remove margins and padding from the list */
-ul {
+/*ul {
     margin: 0;
     padding: 0;
-}
+}*/
 
 /* Style the list items */
-ul li {
+/* make the list items unselectable */
+/*ul li {
     cursor: pointer;
     position: relative;
     padding: 12px 8px 12px 40px;
@@ -19,32 +26,32 @@ ul li {
     font-size: 18px;
     transition: 0.2s;
 
-    /* make the list items unselectable */
+    
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
+}*/
 
 /* Set all odd list items to a different color (zebra-stripes) */
-ul li:nth-child(odd) {
+/*ul li:nth-child(odd) {
     background: #f9f9f9;
-}
+}*/
 
 /* Darker background-color on hover */
-ul li:hover {
+/*ul li:hover {
     background: #ddd;
-}
+}*/
 
 /* When clicked on, add a background color and strike out text */
-ul li.checked {
+/*ul li.checked {
     background: #888;
     color: #fff;
     text-decoration: line-through;
-}
+}*/
 
 /* Add a "checked" mark when clicked on */
-ul li.checked::before {
+/*ul li.checked::before {
     content: '';
     position: absolute;
     border-color: #fff;
@@ -55,10 +62,10 @@ ul li.checked::before {
     transform: rotate(45deg);
     height: 15px;
     width: 7px;
-}
+}*/
 
 /* Style the close button */
-.close {
+/*.close {
     position: absolute;
     right: 0;
     top: 0;
@@ -68,34 +75,34 @@ ul li.checked::before {
 .close:hover {
     background-color: #f44336;
     color: white;
-}
+}*/
 
 /* Style the header */
-.header {
+/*.header {
     background-color: #f44336;
     padding: 30px 40px;
     color: white;
     text-align: center;
-}
+}*/
 
 /* Clear floats after the header */
-.header:after {
+/*.header:after {
     content: "";
     display: table;
     clear: both;
-}
+}*/
 
 /* Style the input */
-input {
+/*input {
     border: none;
     width: 75%;
     padding: 10px;
     float: left;
     font-size: 16px;
-}
+}*/
 
 /* Style the "Add" button */
-.addBtn {
+/*.addBtn {
     padding: 10px;
     width: 25%;
     background: #d9d9d9;
@@ -109,57 +116,57 @@ input {
 
 .addBtn:hover {
     background-color: #bbb;
-}
+}*/
 
 
 
 /*//////////////////////////////////////////////////////////////////////////////////////////*/
 /* The side navigation menu */
 .sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0;
-    left: 0;
-    background-color: #111; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    //height: 100%; /* 100% Full-height */
+    //width: 0; /* 0 width - change this with JavaScript */
+    //position: fixed; /* Stay in place */
+    //z-index: 1; /* Stay on top */
+    //top: 0;
+    //left: 0;
+    //background-color: #111; /* Black*/
+    //overflow-x: hidden; /* Disable horizontal scroll */
+    //padding-top: 60px; /* Place content 60px from the top */
+    //transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
 /* The navigation menu links */
-.sidenav a {
+/*.sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
     display: block;
     transition: 0.3s
-}
+}*/
 
 /* When you mouse over the navigation links, change their color */
-.sidenav a:hover, .offcanvas a:focus{
+/*.sidenav a:hover, .offcanvas a:focus{
     color: #f1f1f1;
-}
+}*/
 
 /* Position and style the close button (top right corner) */
-.sidenav .closebtn {
+/*.sidenav .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
-}
+}*/
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
+/*#main {
     transition: margin-left .5s;
     padding: 20px;
-}
+}*/
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
+/*@media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
-}
+}*/
