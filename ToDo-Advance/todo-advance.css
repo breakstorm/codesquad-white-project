@@ -125,6 +125,29 @@ button{
 }
 
 
+/*. sideNavigation 부분 */
+.sideNavigation{
+    position: fixed;
+    width: 0px;
+    height:100%;
+    z-index:1;
+    background-color:#ffffff;
+    border:solid gray;
+    font-size:2rem;
+    transition:all 2s;
+}
+.navIcon{
+    position:absolute;
+    width:40px;
+    height: auto;
+    //background-color:white;
+    display:block;
+}
+.navA{
+    display:block;
+    margin-left:45px;
+}
+
 /*//////////////////////////////////////////////////////////////////////////////////////////*/
 /* Include the padding and border in an element's total width and height */
 /** {
