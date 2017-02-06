@@ -1,7 +1,69 @@
+.wrapper{
+    position:relative;
+    left:0%;
+    height:500px;
+    top:10px;
+    border:solid gray;
+}
+/*. TOP 부분. 제목 */
+.todo-top{
+    position:relative;
+    
+    height:20%;
+    font-size:50px;
+    text-align: center;
+    border:solid black;
+}
+.top-menuButton{
+    position: absolute;
+    border: solid #00AA00;
+    top:20px;
+}
+.top-header{
+    position: absolute;
+    border: solid #00AA44;
+    top:20px;
+    left:40%;
+}
 
 
+/*. mid 부분.  */
+.todo-mid{
+    position: relative;
+    height: 50%;
+    font-size: 25px;
+    border: solid blue;
+}
 
 
+/*. bottom 부분 */
+.todo-bottom{
+    position: relative;
+    height: 20%;
+    border: solid red;
+}
+
+textarea{
+    position: relative;
+    width: 80%;
+    height: 5rem;
+    background-color:yellow;
+
+}
+
+button{
+    position: relative;
+    width: 10%;
+    height: 7rem;
+    background-color:yellow;
+}
+
+
+/*. footer 부분 */
+.todo-footer{
+    position: relative;
+    top:10px;
+}
 
 
 /*//////////////////////////////////////////////////////////////////////////////////////////*/
