@@ -149,7 +149,7 @@ button{
 .navA{
     display:block;
     margin-left:45px;
-    transition: all 0.5s;
+    transition: all as;
 }
 .closeMenu{
     cursor:pointer;
