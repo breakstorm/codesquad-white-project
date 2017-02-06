@@ -38,11 +38,11 @@
     height: auto;
     font-size: 2rem;
     //border: solid gray;
-    //background-color: green;
+    //background-color: #00A962;
 }
 ul{
     list-style-type: none;
-    background-color:green;
+    background-color:#00A962;
     margin:0px 0px 0px 0px;
     padding: 50px 50px 50px 50px;
 }
@@ -76,7 +76,7 @@ ul{
     position: absolute;
     margin-left: 10px;
     font-size: 2rem;
-    background-color: green;
+    background-color: #00A962;
     border:none;
 }
 
@@ -128,13 +128,16 @@ button{
 /*. sideNavigation 부분 */
 .sideNavigation{
     position: fixed;
+    left:0px;
+    top:0px;
     width: 0px;
     height:100%;
     z-index:1;
     background-color:#ffffff;
-    border:solid gray;
+    //border:solid gray;
     font-size:2rem;
-    transition:all 2s;
+    transition:all 1s;
+    overflow-x: hidden;
 }
 .navIcon{
     position:absolute;
@@ -146,6 +149,13 @@ button{
 .navA{
     display:block;
     margin-left:45px;
+    transition: all 0.5s;
+}
+.closeMenu{
+    cursor:pointer;
+    text-align: right;
+    margin-top:50px;
+    margin-right:30px;
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////////*/
