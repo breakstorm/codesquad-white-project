@@ -1,28 +1,33 @@
 .wrapper{
     position:relative;
     left:0%;
-    height:500px;
+    height:auto;
     top:10px;
     border:solid gray;
 }
 /*. TOP 부분. 제목 */
 .todo-top{
     position:relative;
-    
-    height:20%;
-    font-size:50px;
+    height:100px;
+    font-size:5rem;
     text-align: center;
-    border:solid black;
+    //border:solid black;
+    background-color: gray;
 }
 .top-menuButton{
+    cursor:pointer;
     position: absolute;
-    border: solid #00AA00;
-    top:20px;
+    //border: solid #00AA00;
+    width: 100px;
+    height: auto;
+    //top:10px;
+    left:0px;
 }
 .top-header{
     position: absolute;
-    border: solid #00AA44;
-    top:20px;
+    //border: solid #00AA44;
+    top:0px;
+    height: auto;
     left:40%;
 }
 
@@ -30,9 +35,49 @@
 /*. mid 부분.  */
 .todo-mid{
     position: relative;
-    height: 50%;
-    font-size: 25px;
-    border: solid blue;
+    height: auto;
+    font-size: 2rem;
+    //border: solid gray;
+    //background-color: green;
+}
+ul{
+    list-style-type: none;
+    background-color:green;
+    margin:0px 0px 0px 0px;
+    padding: 50px 50px 50px 50px;
+}
+.check{
+    //appearance:none;
+    //font-size: 4rem;
+    //cursor: pointer;
+    //box-sizing: border-box;
+
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #34495E;
+    border-radius: 100px;
+    box-sizing: border-box;
+    position: relative;
+    box-sizing: content-box ;
+    width: 20px;
+    height: 20px;
+    border-width: 0;
+}
+.check:checked{
+  background-color: #00a4fb;
+}
+.check:focus{
+  outline: 0 none;
+  box-shadow: none;
+}
+
+.done{
+    position: absolute;
+    margin-left: 10px;
+    font-size: 2rem;
+    background-color: green;
+    border:none;
 }
 
 
@@ -40,22 +85,35 @@
 .todo-bottom{
     position: relative;
     height: 20%;
-    border: solid red;
+    //border: solid red;
+    //background-color: yellow;
 }
 
 textarea{
     position: relative;
-    width: 80%;
+    width: 45%;
     height: 5rem;
-    background-color:yellow;
+    font-size: 2rem;
+    margin: 5px 5px 5px 5px;
+}
 
+.inputDone{
+    position: absolute;
+    left:46%;
+    height:5rem;
+    //width:;
+    font-size: 2rem;
+    margin: 5px 5px 5px 5px;
 }
 
 button{
-    position: relative;
-    width: 10%;
-    height: 7rem;
-    background-color:yellow;
+    position: absolute;
+    top:2px;
+    left:79%;
+    width:18.5%;
+    height: 5rem;
+    font-size: 2.5rem;
+    margin: 5px 5px 5px 5px;
 }
 
 
@@ -63,6 +121,7 @@ button{
 .todo-footer{
     position: relative;
     top:10px;
+    text-align: center;
 }
 
 
