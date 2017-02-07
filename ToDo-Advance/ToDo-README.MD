@@ -8,7 +8,9 @@
 참고사이트 : http://ohgyun.com/417
 참고사이트 : https://developer.mozilla.org/en/docs/Web/API/Window/localStorage
 
-
+##사용예
+ - 사용자가 입력한 값을 임시로 저장하고 있다가 사용
+   (자동완성, 검색내역 불러오기)
 
 ##HTML WebStorageAPI의 기능중 LocalStorage 기능
 ```
