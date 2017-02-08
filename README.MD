@@ -132,4 +132,9 @@
 2월7일 실시활동
  - 로컬스토리지 저장, 불러오기 구현
  - 백로그 업데이트(https://github.com/breakstorm/codesquad-white-project/projects/2) 
- - 
+
+#2월8일
+2월8일 실시활동
+ - 통계페이지 생성
+   -- 레이아웃 작성, 챠트 예제 화면에 뿌리기
+ - 통계데이터 수도코드 작성
