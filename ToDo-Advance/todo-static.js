@@ -49,19 +49,33 @@ var myBarChart = new Chart(ctx,{
 		// }
 	}
 });
+/*
+    날짜변수 생성 및 원하는 데이터 가져오기
+    var d = new Date()
+    d.getFullYear().toString() + '-' + d.getMonth().toString() + '-' + d.getDate().toString()
+
+    날짜변수 만드는 방법
+    d = new Date(2017-1-1);
+    Thu Jan 01 1970 09:00:02 GMT+0900 (KST)
+
+    날짜변수 크기비교
+*/
+/*
 //유형1
-//일별 data수 카운트 하기
-//주별 data수 카운트 하기
-//월별 data수 카운트 하기
-//날짜 기준 만드는 방법
-//오늘 날짜를 함수로 가져온다
-//(today - 7) * 4 = W / W-1 / W-2 / W-3 ==> 라벨로 저장
+    일별 data수 카운트 하기
+    주별 data수 카운트 하기
+    월별 data수 카운트 하기
+    날짜 기준 만드는 방법
+    오늘 날짜를 함수로 가져온다
+    (today - 7) * 4 = W / W-1 / W-2 / W-3 ==> 라벨로 저장
+*/
 
-
-// 해당 라벨을 가지고서 date값 비교
-//로컬 스토리지에서 날짜값 파싱하기
-//완료여부 파싱하기
-//data1 : 날짜별 데이터 수 yyyy-mm-dd
-//data2 : 완료 데이터 수 name.checked = true/false
-//data3 : 미완료 데이터 수 name.checked = true/false
-//*data1 = data2 + data3
+/*
+ 해당 라벨을 가지고서 date값 비교
+ 로컬 스토리지에서 날짜값 파싱하기
+ 완료여부 파싱하기
+ data1 : 날짜별 데이터 수 yyyy-mm-dd
+ data2 : 완료 데이터 수 name.checked = true/false
+ data3 : 미완료 데이터 수 name.checked = true/false
+  *data1 = data2 + data3
+*/
