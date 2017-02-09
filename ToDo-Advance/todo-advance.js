@@ -99,7 +99,7 @@ function insertStorageData(listElement, storageData, tempKeyString){
 	storageLength = parseInt(window.localStorage.getItem(tempKeyString));
 	for(i=0; i < storageLength; i++){
 		var tempKey = tempKeyString + i;
-		var tempString = window.localStorage.getItem(tempKey).replace(/(.+)\/\d+-\d+-\d+/,"$1")
+		var tempString = window.localStorage.getItem(tempKey).replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1")
 		var tempHTML = '<li><input type="checkbox" name="check" class="check">'+tempString+'<input type="date" name="done" class="done"></li>'
 		listElement.insertAdjacentHTML("beforeend",tempHTML);
 	}
