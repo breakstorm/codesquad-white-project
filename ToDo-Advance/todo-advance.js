@@ -103,12 +103,8 @@ function insertStorageData(listElement, storageData, tempKeyString){
 		var tempHTML = '<li><input type="checkbox" name="check" class="check">'+tempString+'<input type="date" name="done" class="done"></li>'
 		listElement.insertAdjacentHTML("beforeend",tempHTML);
 	}
-	// test = 테스트4/2017-04-04
-	// pattern = /.+\/\d+-\d+-\d+/
-	// result = test.replace(/(\w+)\/\d+\-\d+\-\d+/,"$1");
+	// test = true/테스트4/2017-04-04
+	// pattern = /.+\/(.+)\/\d+-\d+-\d+/
+	// result = test.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1");
 	// "테스트4"
 }
-// test = 테스트4/2017-04-04
-// pattern = /.+\/\d+-\d+-\d+/
-// result = test.replace(/(\w+)\/\d+\-\d+\-\d+/,"$1");
-// "테스트4"
