@@ -19,8 +19,9 @@ function staticInit(){
     //period값은 month / week / day로 라디오버튼에서 가져온다.
     var date = new Date();
     var dateTodayString = date.getFullYear().toString() + '-' + date.getMonth().toString() + '-' + date.getDate().toString()
+    var dateStruct = new Object();
     var dateStruct={
-        period:"month",
+        period:"week",
         dateToday:date,    
         dateTodayString:dateTodayString,
         labelData:[],
@@ -54,25 +55,26 @@ function staticInit(){
     //그래프 설정값
     var color = Chart.helpers.color;
     var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        // labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels:dateStruct.labelData,
         datasets: [{
-                    label: 'Dataset 1',
+                    label: '전체',
                     backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.red,
                     borderWidth: 1,
-                    data: test
+                    data: dateStruct.listCount
                 }, {
-                    label: 'Dataset 2',
+                    label: '완료',
                     backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.blue,
                     borderWidth: 1,
-                    data: test
+                    data: dateStruct.listCountDone
                 }, {
-                    label: 'Dataset 3',
+                    label: '미완료',
                     backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.green,
                     borderWidth: 1,
-                    data: test
+                    data: dateStruct.listCountMiss
                 }]
             };
 
@@ -89,24 +91,53 @@ function staticInit(){
     		},
     		title:{
     			display: true,
-    			text: 'todo-static'
+    			// text: 'todo-static'
+    		},
+    		scales:{
+    			xAxes:[{
+    				type: 'category'
+    			}],
+    			yAxes:[{
+    				type: 'linear',
+                        display: true,
+                        ticks:{
+                            // max: 10,
+                            min: 0,
+                            fixedStepSize: 1
+                            // stepSize: 1
+                        }
+    			}]
     		}
-    		// scales:{
-    		// 	xAxes:[{
-    		// 		stacked: true
-    		// 	}],
-    		// 	yAxes:[{
-    		// 		stacked: true
-    		// 	}]
-    		// }
     	}
     });
     
+    document.querySelector("canvas").addEventListener("click", function(evt){
+        console.log(evt.target);
+        var activeBars = myBarChart.getElementAtEvent(evt);
+        var tempPeriod = dateStruct.labelPeriod[avtiveBars[0].index];
+        var tempPeriodData = [];
+        console.log(activeBars);
+        console.log(dateStruct);
 
+    //필요한 값
+    //avtiveBars[0].index
+    //X축 기간값
+    //dateStruct.labelPeriod[avtiveBars[0].index]
+    //로컬스토리지에서 해당 기간의 값을 검색
+    getSearchData(tempPeriod, tempPeriodData, keyString, keyStringNumber)
+    //setDOMPage(저장할 엘리먼트, 데이터배열)
+    })
     
 
 }
 
+
+function getSearchData(tempPeriod, tempPeriodData, tempKeyStringNumber){
+    //기간값1, 기간값2 파싱하기
+    //로컬스토리지 전체 접근
+    //해당 기간값에 해당하는 데이터 접근
+    //텍스트 내용, 완료여부, 날짜값 가져오기
+}
 function getLabelData(dateStruct, tempKeyString, tempKeyStringNumber){
     /*
         날짜변수 생성 및 원하는 데이터 가져오기
@@ -172,26 +203,44 @@ function getListCount(dateStruct, tempKeyString, tempKeyStringNumber){
     //데이터 입력(데이터 리스트 개수)
     //forEach를 이용해서 period값에 로컬스토리지 전체를 검색. 충족변수 확인.
     //로컬 스토리지의 값을 date로 만들어야 함.
-    //기준데이터 - experimental dateStruct.period
+    //기준데이터 - experimental dateStruct.period -> minDate / maxDate
     //비교데티터 - control 로컬 스토리지
     var done = 0;
     var miss = 0;
+    var list = 0;
 
     switch(dateStruct.period){
         case 'week':
-
             //전체에서 period 기준 맞는 데이터 거르기
+            for(i=0; i < dateStruct.labelPeriod.length; i++){
+                var dateString = dateStruct.labelPeriod[i];
+                var maxText = dateString.replace(/(.+)\/.+/,"$1");
+                maxDate = new Date(maxText);
+                var minText = dateString.replace(/.+\/(.+)/,"$1");
+                minDate = new Date(minText);
+
             //period별 데이터에서 true/false 거르기
-            dateStruct.listCount =  dateStruct.labelPeriod.length;
-            for(i=0; i < tempKeyStringNumber; i++){
-                key = tempKeyString+i;
-                rawData = window.localStorage.getItem(key);
-                keyData = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
-                if(keyData === true) done++;
-                else miss++;
+                for(j=0; j < tempKeyStringNumber; j++){
+                    key = tempKeyString+j;
+                    rawData = window.localStorage.getItem(key);
+                    keyData = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
+                    keyDate = rawData.replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1");
+                    controlDate = new Date(keyDate)
+                    if(controlDate > minDate && controlDate < maxDate){
+                        if(keyData === "true") done++;
+                        else miss++;
+                        
+                        list++;    
+                    }
+                }
                 dateStruct.listCountDone.push(done);
                 dateStruct.listCountMiss.push(miss);
+                dateStruct.listCount.push(list);
+                done = 0;
+                miss = 0;
+                list = 0;
             }
+            
             break;
 
         case 'month':
@@ -225,6 +274,8 @@ function getListCount(dateStruct, tempKeyString, tempKeyStringNumber){
 
 
 }
+
+
 
 document.addEventListener("DOMContentLoaded", function(evt){
     staticInit();
