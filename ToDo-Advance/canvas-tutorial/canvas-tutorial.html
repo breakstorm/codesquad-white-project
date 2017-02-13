@@ -2,157 +2,148 @@
 <html>
 <head>
 	<title>tutorial</title>
-	<!-- <script src="chart.js/dist/Chart.js"></script> -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
 </head>
 <body>
 	<canvas id="myChart" width="400" height="400"></canvas>
+	<p id="roomForChart"></p>
 	<script>
-	//var data = [12, 19, 3, 5, 2222, 300];
-	// var data = {
-	//     labels: [["January","a","b"], ["February","a","b"], ["March","a","b"], ["April","a","b"], ["May","a","b"], ["June","a","b"], ["July","a","b"]],
-	//     datasets: [
-	//         {
-	//             label: "My First dataset",
-	//             backgroundColor: [
-	//                 'rgba(255, 99, 132, 0.2)',
-	//                 'rgba(54, 162, 235, 0.2)',
-	//                 'rgba(255, 206, 86, 0.2)',
-	//                 'rgba(75, 192, 192, 0.2)',
-	//                 'rgba(153, 102, 255, 0.2)',
-	//                 'rgba(255, 159, 64, 0.2)'
-	//             ],
-	//             borderColor: [
-	//                 'rgba(255,99,132,1)',
-	//                 'rgba(54, 162, 235, 1)',
-	//                 'rgba(255, 206, 86, 1)',
-	//                 'rgba(75, 192, 192, 1)',
-	//                 'rgba(153, 102, 255, 1)',
-	//                 'rgba(255, 159, 64, 1)'
-	//             ],
-	//             borderWidth: 1,
-	//             data: [[65,10,22], [59,11,23], [801,2,3], [81,4,5], [56,7,8], [55,8,7], [40,1,2]],
-	//         }
-	//     ]
-	// };
-	var data = {
-	    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	    datasets: [
-	        {
-	            label: "My First dataset",
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0.2)',
-	                'rgba(54, 162, 235, 0.2)',
-	                'rgba(255, 206, 86, 0.2)',
-	                'rgba(75, 192, 192, 0.2)',
-	                'rgba(153, 102, 255, 0.2)',
-	                'rgba(255, 159, 64, 0.2)'
-	            ],
-	            borderColor: [
-	                'rgba(255,99,132,1)',
-	                'rgba(54, 162, 235, 1)',
-	                'rgba(255, 206, 86, 1)',
-	                'rgba(75, 192, 192, 1)',
-	                'rgba(153, 102, 255, 1)',
-	                'rgba(255, 159, 64, 1)'
-	            ],
-	            borderWidth: 1,
-	            data: [65, 59, 80, 81, 56, 55, 40],
-	        }
-	    ]
-	};
-	var ctx = document.getElementById("myChart");
-	var myBarChart = new Chart(ctx,{
-		type: 'bar',
-		data: data,
-		options: {
-			scales:{
-				xAxes:[{
-					stacked: true
-				}],
-				yAxes:[{
-					stacked: true
-				}]
-			}
+	/*
+		// var Chart = require('chart.js');
+		var ctx = document.getElementById("myChart").getContext("2d");
+
+
+		var data = {
+			labels: ["jan", "feb", "mar", "apr"],
+			datasets:[
+				{
+					label:"first",
+					backgroundColor:[
+						  'rgba(255, 99, 132, 0.2)',
+			              'rgba(54, 162, 235, 0.2)',
+			              'rgba(255, 206, 86, 0.2)',
+			              'rgba(75, 192, 192, 0.2)',
+					],
+					borderColor:[
+						'rgba(255, 99, 132, 0.2)',
+			            'rgba(54, 162, 235, 0.2)',
+			            'rgba(255, 206, 86, 0.2)',
+			            'rgba(75, 192, 192, 0.2)',
+					],
+					bordreWidth:1,
+					data:[3,4,5,6]
+
+				}
+			]
 		}
+
+
+		var myBarChart = new Chart(ctx, {
+			type: 'bar',
+			data: data,
+			options: {
+				hover: {
+					mode: 'label'
+				},
+				scales: {
+					xAxes: [{
+						// type: 'logarithmic',
+						type: 'category',
+						// type: 'linear',
+						// position: 'bottom',
+						
+						stacked: true,
+						// barThickness: 50,
+						catgoryPercentage: 0.1,
+						barPercentage: 0.9
+					}],
+					yAxes: [{
+						type: 'linear',
+						display: true,
+						ticks:{
+							max: 10,
+							min: 0
+						}
+
+					}]
+				}
+			}
+		});*/
+
+		 //NOTE: the div 'roomForChart' has been already declared as <div id="roomForChart"></div>
+
+
+	 //creating html code inside of javascript to display the canvas used for the graph
+	 // htmlForGraph = "<canvas id='myChart' width ='500' height='400'>";
+	 // document.getElementById('roomForChart').innerHTML += htmlForGraph;
+	 holder = document.getElementById('roomForChart');
+	holder.innerHTML += htmlForGraph;
+	 //NOW TO CREATE DATA
+
+   //the data for my line chart
+    var data = {
+         labels: ["Aug 1", "Aug 2", "Aug 3","Aug 4","Aug 5"], //the x axis
+          datasets: [
+            {   //my red line
+                label: "Usage Plan",
+                fillColor: "rgba(255,255,255,0.2)", //adds the color below the line
+                strokeColor: "rgba(224,0,0,1)",//creates the line
+                pointColor: "rgba(244,0,0,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [1024, 1024, 1024, 1024, 1024]
+           },
+
+       {    //my green line
+            label: "Overall Usage",
+            fillColor: "rgba(48,197,83,0.2)",
+            strokeColor: "rgba(48,197,83,1)",
+            pointColor: "rgba(48,197,83,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(48,197,83,1)",
+            data: [15, 25, 45, 45, 1500]
+       },
+        {  //my blue line
+            label: "Daily Usage",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [15, 10, 20, 0, 5]
+       }
+
+     ] //ending the datasets
+     }; //ending data
+
+
+    //creating a variable for my chart
+    var ctx = document.getElementById("myChart").getContext("2d");
+
+
+
+
+	//code to create a maximum y value on the chart
+	var maxUsage = 1024;
+	var maxSteps = 5;
+	var myLineChart = new Chart(ctx).Line(data, {
+	    pointDot: false,
+	    scaleOverride: true,
+	    scaleSteps: maxSteps,
+	    scaleStepWidth: Math.ceil(maxUsage / maxSteps),
+	    scaleStartValue: 0
+
 	});
 
-	//1번 예제
-	// var myChart = new Chart(ctx, {
-	//     type: 'bar',
-	//     data: {
-	//         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-	//         datasets: [{
-	//             label: '# of Votes',
-	//             data: [12, 19, 3, 5, 2, 3],
-	//             backgroundColor: [
-	//                 'rgba(255, 99, 132, 1)',
-	//                 'rgba(54, 162, 235, 1)',
-	//                 'rgba(255, 206, 86, 0.2)',
-	//                 'rgba(75, 192, 192, 0.2)',
-	//                 'rgba(153, 102, 255, 0.2)',
-	//                 'rgba(255, 159, 64, 0.2)'
-	//             ],
-	//             borderColor: [
-	//                 'rgba(255,99,132,1)',
-	//                 'rgba(54, 162, 235, 1)',
-	//                 'rgba(255, 206, 86, 1)',
-	//                 'rgba(75, 192, 192, 1)',
-	//                 'rgba(153, 102, 255, 1)',
-	//                 'rgba(255, 159, 64, 1)'
-	//             ],
-	//             borderWidth: 1
-	//         }]
-	//     },
-	//     options: {
-	//         scales: {
-	//             yAxes: [{
-	//                 ticks: {
-	//                     beginAtZero:true
-	//                 }
-	//             }]
-	//         }
-	//     }
-	// });
-	//2번예제
-	// var chartInstance = new Chart(ctx, {
- //    type: 'line',
- //    data: data,
- //    options: {
- //        title: {
- //            display: true,
- //            text: 'Custom Chart Title'
- //        }
-	//     }
-	// })
-	//3번예제
-// 	var myChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels: ['Item 1', 'Item 2', 'Item 3'],
-//         datasets: [
-//             {
-//                 type: 'bar',
-//                 label: 'Bar Component',
-//                 data: [10, 20, 30],
-//             },
-//             {
-//                 type: 'line',
-//                 label: 'Line Component',
-//                 data: [30, 20, 10],
-//             }
-//         ]
-//     }
-// });
+	 //what I have tried but it doesn't show an alert message
+	ctx.onclick = function(evt){
+	    var activePoints = myLineChart.getPointsAtEvent(evt);
+	    // => activePoints is an array of points on the canvas that are at the same position as the click event.
+	   alert("See me?");
+	};
 	</script>
-	<!-- 
-	<script type="text/javascript">
-		var c = document.querySelector("#myCanvas");
-		var ctx = c.getContext("2d");
-		ctx.moveTo(0,0);
-		ctx.lineTo(400,200);
-		ctx.stroke();
-
-	</script> -->
 </body>
 </html>
