@@ -1,6 +1,7 @@
 function staticInit(){
 
     var test = [1,2,3,4,5,6,7];
+    var bottomElement = document.querySelector(".todo-bottom");
 
     /*
      해당 라벨을 가지고서 date값 비교
@@ -114,30 +115,93 @@ function staticInit(){
     document.querySelector("canvas").addEventListener("click", function(evt){
         console.log(evt.target);
         var activeBars = myBarChart.getElementAtEvent(evt);
-        var tempPeriod = dateStruct.labelPeriod[avtiveBars[0].index];
-        var tempPeriodData = [];
+        var tempPeriod = dateStruct.labelPeriod[activeBars[0]._index];
+        var tempPeriodData = {
+            tempDone:[],
+            tempMiss:[]
+        };
         console.log(activeBars);
         console.log(dateStruct);
 
     //필요한 값
     //avtiveBars[0].index
     //X축 기간값
-    //dateStruct.labelPeriod[avtiveBars[0].index]
+    //dateStruct.labelPeriod[activeBars[0]._index]
     //로컬스토리지에서 해당 기간의 값을 검색
     getSearchData(tempPeriod, tempPeriodData, keyString, keyStringNumber)
-    //setDOMPage(저장할 엘리먼트, 데이터배열)
+    console.log(tempPeriodData);
+    setPeriodListPage(bottomElement, tempPeriodData);
     })
     
 
 }
 
 
-function getSearchData(tempPeriod, tempPeriodData, tempKeyStringNumber){
+function getSearchData(tempPeriod, tempPeriodData, tempKeyString, tempKeyStringNumber){
     //기간값1, 기간값2 파싱하기
+    var maxPeriodText = tempPeriod.replace(/(.+)\/.+/,"$1");
+    var maxPeriod = new Date(maxPeriodText);
+    var minPeriodText = tempPeriod.replace(/.+\/(.+)/,"$1");
+    var minPeriod = new Date(minPeriodText);
     //로컬스토리지 전체 접근
+    for(i=0; i < tempKeyStringNumber; i++){
+        key = tempKeyString+i;
+        rawData = window.localStorage.getItem(key);
+        controlDateText = rawData.replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1");
+        controlDate = new Date(controlDateText);
+        controlWork = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
+        if(controlDate >= minPeriod && controlDate <= maxPeriod){
+            if(controlWork === "true") tempPeriodData.tempDone.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"));
+            else tempPeriodData.tempMiss.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"))
+        }
+
+    }
     //해당 기간값에 해당하는 데이터 접근
     //텍스트 내용, 완료여부, 날짜값 가져오기
 }
+
+
+function setPeriodListPage(bottomElement, tempPeriodData){
+    //bottom영역에 있는 엘리먼트 삭제
+    deleteElementAllChild(bottomElement);
+    //완료부분 삽입
+    //완료부분 데이터 삽입
+    setPeriodListPageDonework(bottomElement, tempPeriodData);
+    //미완료부분 삽입
+    //미완료부분 데이터 삽입
+    setPeriodListPageMisswork(bottomElement, tempPeriodData);
+}
+
+
+function deleteElementAllChild(bottomElement){
+    let length = bottomElement.children.length;
+    if(length === 0) return;
+    for(i=0; i < length; i++){
+        bottomElement.removeChild(bottomElement.firstElementChild)
+    }
+}
+
+
+function setPeriodListPageDonework(bottomElement, tempPeriodData){
+    bottomElement.insertAdjacentHTML('beforeend','<h2>완료한 일</h2><ul class="donework"></ul>');
+    newPoint = document.querySelector(".donework");
+    for(temp in tempPeriodData.tempDone) {
+        var htmlString = "<li>" + tempPeriodData.tempDone[temp] + "</li>"
+        newPoint.insertAdjacentHTML('beforeend', htmlString);
+    }
+}
+
+
+function setPeriodListPageMisswork(bottomElement, tempPeriodData){
+    bottomElement.insertAdjacentHTML('beforeend','<h2>미완료한 일</h2><ul class="misswork"></ul>');
+    newPoint = document.querySelector(".misswork");
+    for(temp in tempPeriodData.tempMiss) {
+        var htmlString = "<li>" + tempPeriodData.tempMiss[temp] + "</li>"
+        newPoint.insertAdjacentHTML('beforeend', htmlString);
+    }
+}
+
+
 function getLabelData(dateStruct, tempKeyString, tempKeyStringNumber){
     /*
         날짜변수 생성 및 원하는 데이터 가져오기
