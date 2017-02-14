@@ -1,8 +1,9 @@
 function staticInit(){
 
-    var test = [1,2,3,4,5,6,7];
     var bottomElement = document.querySelector(".todo-bottom");
 
+
+    /* 데이터값 세팅 부분*/    
     /*
      해당 라벨을 가지고서 date값 비교
      로컬 스토리지에서 날짜값 파싱하기
@@ -11,12 +12,7 @@ function staticInit(){
      data2 : 완료 데이터 수 name.checked = true/false
      data3 : 미완료 데이터 수 name.checked = true/false
       *data1 = data2 + data3
-    */
-        
-    //라벨값 만들기
-    //라벨값에 따른 숫자(전체,완료,미완료)
-    //data배열의 값 가져오기 (오브젝트?)
-
+    */  
     //period값은 month / week / day로 라디오버튼에서 가져온다.
     var date = new Date();
     var dateTodayString = date.getFullYear().toString() + '-' + date.getMonth().toString() + '-' + date.getDate().toString()
@@ -46,17 +42,13 @@ function staticInit(){
         console.log("data empty");
         return false; //로컬스토리지에 데이터가 없어서 그래프를 그릴수 없음.
     }
+    //선택된 단위로 데이터값 초기화
+    getSettingData(dateStruct,keyString, keyStringNumber);
+
     
-
-    //라벨값 가져오는 기능 (배열, 주기, 현재 날짜값)
-    getLabelData(dateStruct, keyString, keyStringNumber);
-    //주기값을 기준으로 데이터 수 입력
-    getListCount(dateStruct, keyString, keyStringNumber);
-
-    //그래프 설정값
+    /* 그래프 설정값 */
     var color = Chart.helpers.color;
     var data = {
-        // labels: ["January", "February", "March", "April", "May", "June", "July"],
         labels:dateStruct.labelData,
         datasets: [{
                     label: '전체',
@@ -78,28 +70,22 @@ function staticInit(){
                     data: dateStruct.listCountMiss
                 }]
             };
-
-    //그래프 화면에 그리틑 부분
-    var ctx = document.querySelector(".mid-Chart").getContext("2d");
-    var myBarChart = new Chart(ctx,{
-    	type: 'bar',
-    	data: data,
-    	options: {
-    		responsive: true,
-    		//maintainAspectRatio: false,
-    		legend:{
-    			position: 'bottom',
-    		},
-    		title:{
-    			display: true,
-    			// text: 'todo-static'
-    		},
-    		scales:{
-    			xAxes:[{
-    				type: 'category'
-    			}],
-    			yAxes:[{
-    				type: 'linear',
+    options={
+        responsive: true,
+            //maintainAspectRatio: false,
+            legend:{
+                position: 'bottom',
+            },
+            title:{
+                display: true,
+                // text: 'todo-static'
+            },
+            scales:{
+                xAxes:[{
+                    type: 'category'
+                }],
+                yAxes:[{
+                    type: 'linear',
                         display: true,
                         ticks:{
                             // max: 10,
@@ -107,33 +93,43 @@ function staticInit(){
                             fixedStepSize: 1
                             // stepSize: 1
                         }
-    			}]
-    		}
-    	}
-    });
+                }]
+            }
+    }
+    chartConfig={
+        type: 'bar',
+        data: data,
+        options: options
+    }
+
+    //그래프 화면에 그리틑 부분
+    var ctx = document.querySelector(".mid-Chart").getContext("2d");
+    var myBarChart = new Chart(ctx,chartConfig);
     
     document.querySelector("canvas").addEventListener("click", function(evt){
-        console.log(evt.target);
         var activeBars = myBarChart.getElementAtEvent(evt);
         var tempPeriod = dateStruct.labelPeriod[activeBars[0]._index];
         var tempPeriodData = {
             tempDone:[],
             tempMiss:[]
         };
-        console.log(activeBars);
-        console.log(dateStruct);
-
-    //필요한 값
-    //avtiveBars[0].index
-    //X축 기간값
     //dateStruct.labelPeriod[activeBars[0]._index]
     //로컬스토리지에서 해당 기간의 값을 검색
     getSearchData(tempPeriod, tempPeriodData, keyString, keyStringNumber)
-    console.log(tempPeriodData);
+    //해당 데이터값을 화면에 표시
     setPeriodListPage(bottomElement, tempPeriodData);
-    })
+    myBarChart.update();
+    });
     
 
+}
+
+
+function getSettingData(dateStruct, tempKeyString, tempKeyStringNumber){
+    //라벨값 가져오는 기능 (배열, 주기, 현재 날짜값)
+    getLabelData(dateStruct, tempKeyString, tempKeyStringNumber);
+    //주기값을 기준으로 데이터 수 입력
+    getListCount(dateStruct, tempKeyString, tempKeyStringNumber);    
 }
 
 
@@ -203,6 +199,7 @@ function setPeriodListPageMisswork(bottomElement, tempPeriodData){
 
 
 function getLabelData(dateStruct, tempKeyString, tempKeyStringNumber){
+    
     /*
         날짜변수 생성 및 원하는 데이터 가져오기
         var d = new Date()
@@ -258,9 +255,7 @@ function getLabelData(dateStruct, tempKeyString, tempKeyStringNumber){
                 dateStruct.labelData.push(tempString);
             }
             break;
-    }
-
-    
+    }   
 };
 
 function getListCount(dateStruct, tempKeyString, tempKeyStringNumber){
@@ -323,20 +318,6 @@ function getListCount(dateStruct, tempKeyString, tempKeyStringNumber){
             }
             break;
     }
-
-
-
-    //우선 날짜값(string)값을 배열에 다 넣고서
-    /*
-    var tempKey = tempKeyString;
-    var tempArr = [];
-    for(i = 0; i < tempKeyStringNumber; i++){
-        tempKey = tempKeyString + i;
-        tempArr.push(window.localStorage.getItem(tempKey))
-    }
-    */
-
-
 }
 
 
