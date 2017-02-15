@@ -15,7 +15,7 @@ function staticInit(){
     */  
     //period값은 month / week / day로 라디오버튼에서 가져온다.
     var date = new Date();
-    var dateTodayString = date.getFullYear().toString() + '-' + date.getMonth().toString() + '-' + date.getDate().toString()
+    var dateTodayString = date.getFullYear().toString() + '-' + (date.getMonth()+1).toString() + '-' + date.getDate().toString()
     var dateStruct = new Object();
     var dateStruct={
         period:"week",
@@ -108,20 +108,62 @@ function staticInit(){
     
     document.querySelector("canvas").addEventListener("click", function(evt){
         var activeBars = myBarChart.getElementAtEvent(evt);
-        var tempPeriod = dateStruct.labelPeriod[activeBars[0]._index];
+        var tempDate = dateStruct.labelPeriod[activeBars[0]._index];
         var tempPeriodData = {
             tempDone:[],
             tempMiss:[]
         };
     //dateStruct.labelPeriod[activeBars[0]._index]
     //로컬스토리지에서 해당 기간의 값을 검색
-    getSearchData(tempPeriod, tempPeriodData, keyString, keyStringNumber)
+    getSearchData(tempDate, tempPeriodData, keyString, keyStringNumber, dateStruct.period)
     //해당 데이터값을 화면에 표시
     setPeriodListPage(bottomElement, tempPeriodData);
     myBarChart.update();
     });
-    
 
+    document.querySelector(".mid-period").addEventListener("change",function(evt){
+        // console.log(evt.target.value);
+        if(evt.target.checked === false) return;
+        //dateStruct 데이터값 초기화
+        setDateStructDefault(dateStruct);
+        //기간값 변경
+        setDateStructPeriod(dateStruct, evt.target.value);
+        //데이터 세팅 변경
+        getSettingData(dateStruct,keyString, keyStringNumber);
+        //myBarChart 데이터 변경
+        setChartData(dateStruct, myBarChart);
+        //그래프 업데이트
+        myBarChart.update();
+        // myBarChart.clear();
+        // myBarChart.render();
+        // myBarChart.destroy();
+        // var myBarChart = new Chart(ctx, chartConfig);
+    });
+}
+
+function setChartData(dateStruct, myBarChart) {
+    myBarChart.data.labels = dateStruct.labelData;
+    myBarChart.data.datasets[0].data = dateStruct.listCount;
+    myBarChart.data.datasets[1].data = dateStruct.listCountDone;
+    myBarChart.data.datasets[2].data = dateStruct.listCountMiss;
+    return true;
+}
+
+
+function setDateStructPeriod(dateStruct, value) {
+    dateStruct.period = value;
+    return true;
+}
+
+
+function setDateStructDefault(dateStruct){
+    // dateStruct.period = "";
+    dateStruct.labelData = [];
+    dateStruct.labelPeriod = [];
+    dateStruct.listCount = [];
+    dateStruct.listCountDone = [];
+    dateStruct.listCountMiss = [];
+    return true;
 }
 
 
@@ -133,24 +175,42 @@ function getSettingData(dateStruct, tempKeyString, tempKeyStringNumber){
 }
 
 
-function getSearchData(tempPeriod, tempPeriodData, tempKeyString, tempKeyStringNumber){
+function getSearchData(tempDate, tempPeriodData, tempKeyString, tempKeyStringNumber, tempPeriod){
     //기간값1, 기간값2 파싱하기
-    var maxPeriodText = tempPeriod.replace(/(.+)\/.+/,"$1");
+    var maxPeriodText = tempDate.replace(/(.+)\/.+/,"$1");
     var maxPeriod = new Date(maxPeriodText);
-    var minPeriodText = tempPeriod.replace(/.+\/(.+)/,"$1");
+    var minPeriodText = tempDate.replace(/.+\/(.+)/,"$1");
     var minPeriod = new Date(minPeriodText);
     //로컬스토리지 전체 접근
-    for(i=0; i < tempKeyStringNumber; i++){
-        key = tempKeyString+i;
-        rawData = window.localStorage.getItem(key);
-        controlDateText = rawData.replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1");
-        controlDate = new Date(controlDateText);
-        controlWork = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
-        if(controlDate >= minPeriod && controlDate <= maxPeriod){
-            if(controlWork === "true") tempPeriodData.tempDone.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"));
-            else tempPeriodData.tempMiss.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"))
-        }
+    //주, 월 단위의 경우
+    if(tempPeriod === 'week' || tempPeriod === 'month'){
+        for(i=0; i < tempKeyStringNumber; i++){
+            key = tempKeyString+i;
+            rawData = window.localStorage.getItem(key);
+            controlDateText = rawData.replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1");
+            controlDate = new Date(controlDateText);
+            controlWork = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
+            if(controlDate >= minPeriod && controlDate <= maxPeriod){
+                if(controlWork === "true") tempPeriodData.tempDone.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"));
+                else tempPeriodData.tempMiss.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"))
+            }
 
+        }
+    }
+    else if(tempPeriod ==='day'){
+        for(i=0; i < tempKeyStringNumber; i++){
+            key = tempKeyString+i;
+            rawData = window.localStorage.getItem(key);
+            controlDateText = rawData.replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1");
+            controlDate = new Date(controlDateText);
+            controlDateText = controlDate.getFullYear().toString() + '-' + (controlDate.getMonth()+1).toString() + '-' + controlDate.getDate().toString()
+            controlWork = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
+            if(controlDateText === tempDate){
+                if(controlWork === "true") tempPeriodData.tempDone.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"));
+                else tempPeriodData.tempMiss.push(rawData.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1"))
+            }
+
+        }   
     }
     //해당 기간값에 해당하는 데이터 접근
     //텍스트 내용, 완료여부, 날짜값 가져오기
@@ -255,7 +315,8 @@ function getLabelData(dateStruct, tempKeyString, tempKeyStringNumber){
                 dateStruct.labelData.push(tempString);
             }
             break;
-    }   
+    }
+    dateStruct.dateToday = new Date();
 };
 
 function getListCount(dateStruct, tempKeyString, tempKeyStringNumber){
@@ -303,23 +364,81 @@ function getListCount(dateStruct, tempKeyString, tempKeyStringNumber){
             break;
 
         case 'month':
+            //전체에서 period 기준 맞는 데이터 거르기
+            for(i=0; i < dateStruct.labelPeriod.length; i++){
+                var dateString = dateStruct.labelPeriod[i];
+                var maxText = dateString.replace(/(.+)\/.+/,"$1");
+                maxDate = new Date(maxText);
+                var minText = dateString.replace(/.+\/(.+)/,"$1");
+                minDate = new Date(minText);
+
+            //period별 데이터에서 true/false 거르기
+                for(j=0; j < tempKeyStringNumber; j++){
+                    key = tempKeyString+j;
+                    rawData = window.localStorage.getItem(key);
+                    keyData = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
+                    keyDate = rawData.replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1");
+                    controlDate = new Date(keyDate)
+                    if(controlDate > minDate && controlDate < maxDate){
+                        if(keyData === "true") done++;
+                        else miss++;
+                        
+                        list++;    
+                    }
+                }
+                dateStruct.listCountDone.push(done);
+                dateStruct.listCountMiss.push(miss);
+                dateStruct.listCount.push(list);
+                done = 0;
+                miss = 0;
+                list = 0;
+            }
             break;
 
         case 'day':
-            dateStruct.listCount =  dateStruct.labelPeriod.length;
-            for(i=0; i < tempKeyStringNumber; i++){
-                key = tempKeyString+i;
-                rawData = window.localStorage.getItem(key);
-                keyData = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
-                if(keyData === true) done++;
-                else miss++;
+            //전체에서 period 기준 맞는 데이터 거르기
+            for(i=0; i < dateStruct.labelPeriod.length; i++){
+                var dateString = dateStruct.labelPeriod[i];
+                var maxText = dateString.replace(/(.+)\/.+/,"$1");
+                maxDate = new Date(maxText);
+                var minText = dateString.replace(/.+\/(.+)/,"$1");
+                minDate = new Date(minText);
+
+            //period별 데이터에서 true/false 거르기
+                for(j=0; j < tempKeyStringNumber; j++){
+                    key = tempKeyString+j;
+                    rawData = window.localStorage.getItem(key);
+                    keyData = rawData.replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
+                    keyDate = rawData.replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1");
+                    controlDate = new Date(keyDate)
+                    controlDateText = controlDate.getFullYear().toString() + '-' + (controlDate.getMonth()+1).toString() + '-' + controlDate.getDate().toString()
+                    if(controlDateText == minText ){
+                        if(keyData === "true") done++;
+                        else miss++;
+                        
+                        list++;    
+                    }
+                }
                 dateStruct.listCountDone.push(done);
                 dateStruct.listCountMiss.push(miss);
+                dateStruct.listCount.push(list);
+                done = 0;
+                miss = 0;
+                list = 0;
             }
             break;
     }
 }
 
+
+document.querySelector(".top-menuButton").addEventListener("click",function(evt){
+    document.querySelector(".sideNavigation").style.width = "250px";
+});
+
+
+document.querySelector(".closeMenu").addEventListener("click",function(evt){
+    document.querySelector(".sideNavigation").style.width = "0px";
+});
 
 
 document.addEventListener("DOMContentLoaded", function(evt){
