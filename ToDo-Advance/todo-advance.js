@@ -46,18 +46,36 @@ function init(){
 	//화면에 DOM조작을 함
 	inputButtonElement.addEventListener("click", function(evt){
 		if(evt.target.tagName !== "BUTTON") return false;
-		var result = inputTextElement.value + '/' + inputDateElement.value;
+		//데이터 저장 내용
+		if(inputDateElement.value === ""){
+			var date = new Date();
+    		var dateValue = date.getFullYear().toString() + '-' + (date.getMonth()+1).toString() + '-' + date.getDate().toString()
+		}
+		else{
+			var dateValue = inputDateElement.value;
+		}
+		var result = 'false/' + inputTextElement.value + '/' + dateValue;
+		//로컬스토리지 저장
 		setTodoList(keyString, keyStringNumber, result);
+		//저장한 데이터값 화면에 출력
+		setNewTodoList(listElement, inputTextElement.value, dateValue);
+		//저장한 Check 표시
+		// setNewTodoListCheckbox(listElement)
 		// localStorage.setItem(keyString, key,result);
-		keyStringNumber = parseInt(localStorage.getItem(keyString));
+		// keyStringNumber = parseInt(localStorage.getItem(keyString));
 	})
 
 }
 
 
+function setNewTodoList(listElement, tempText, tempDate){
+	var setString = '<li><input type="checkbox" name="check" class="check">' + tempText + '<input type="date" name="done" class="done" value="' + tempDate + '"></li>';
+	listElement.insertAdjacentHTML('beforeend', setString);
+	return true;
+}
 
 function setTodoList(tempKeyString, tempKeyStringNumber, tempResult){
-	var temp = tempKeyString + tempKeyStringNumber
+	var temp = tempKeyString + tempKeyStringNumber;
 	localStorage.setItem(temp, tempResult);
 	tempKeyStringNumber += 1;
 	localStorage.setItem(tempKeyString, tempKeyStringNumber.toString());
@@ -74,7 +92,8 @@ function listInit(listElement, tempKeyStringNumber, tempKeyString){
 	getAllStorageData(listElement, storageData, tempKeyString);
 	//해당 위치에 모든 배열의 값 넣기
 	insertStorageData(listElement, storageData, tempKeyString);
-	//Date값, checkbox값 넣기
+	//checkbox값 넣기
+	insertStorageCheckbox(listElement, storageData, tempKeyString);
 }
 
 function listAllDelete(listElement){
@@ -95,16 +114,30 @@ function getAllStorageData(listElement, storageData, tempKeyString){
 }
 
 function insertStorageData(listElement, storageData, tempKeyString){
-	console.log(storageData);
+	// console.log(storageData);
 	storageLength = parseInt(window.localStorage.getItem(tempKeyString));
 	for(i=0; i < storageLength; i++){
 		var tempKey = tempKeyString + i;
 		var tempString = window.localStorage.getItem(tempKey).replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1")
-		var tempHTML = '<li><input type="checkbox" name="check" class="check">'+tempString+'<input type="date" name="done" class="done"></li>'
+		// var tempChecked = window.localStorage.getItem(tempKey).replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1")
+		// if(tempChecked === "true") var tempCheckBoolean = true;
+		// else var tempCheckBoolean = 0;
+		var tempDate = window.localStorage.getItem(tempKey).replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1")
+		var tempHTML = '<li><input type="checkbox" name="check" class="check" checked="">' + tempString + '<input type="date" name="done" class="done" value="' + tempDate + '"></li>';
 		listElement.insertAdjacentHTML("beforeend",tempHTML);
 	}
 	// test = true/테스트4/2017-04-04
 	// pattern = /.+\/(.+)\/\d+-\d+-\d+/
 	// result = test.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1");
 	// "테스트4"
+}
+
+function insertStorageCheckbox(listElement, storageData, tempKeyString){
+	var tempList = document.querySelectorAll(".check");
+	for(i=0; i < tempList.length; i++){
+		// var temp = document.querySelector(".check:nth-child("+(i+1)+")");
+		var tempString = storageData[i].replace(/(.+)\/.+\/\d+-\d+-\d+/,"$1");
+		if(tempString === "true") tempList[i].checked = true;
+		else tempList[i].checked = false;
+	}
 }
