@@ -29,6 +29,9 @@ function init(){
 	var inputTextElement = document.querySelector("textarea")
 	var inputDateElement = document.querySelector(".inputDone");
 	var inputButtonElement = document.querySelector(".inputButton");
+	var deleteButtonElement = document.querySelector(".deleteButton");
+	var midElement = document.querySelector(".todo-mid");
+
 	var keyString = 'keyNumber';
 	var keyStringNumber = 0;
 	var key = keyString + keyStringNumber;
@@ -43,7 +46,6 @@ function init(){
 	
 
 	//버튼을 클릭하면 input 값이 스토리지에 저장
-	//화면에 DOM조작을 함
 	inputButtonElement.addEventListener("click", function(evt){
 		if(evt.target.tagName !== "BUTTON") return false;
 		//데이터 저장 내용
@@ -59,17 +61,30 @@ function init(){
 		setTodoList(keyString, keyStringNumber, result);
 		//저장한 데이터값 화면에 출력
 		setNewTodoList(listElement, inputTextElement.value, dateValue);
-		//저장한 Check 표시
-		// setNewTodoListCheckbox(listElement)
-		// localStorage.setItem(keyString, key,result);
-		// keyStringNumber = parseInt(localStorage.getItem(keyString));
-	})
+	});
+	//화면의 체크박스 조작 이벤트
+	midElement.addEventListener("change", function(evt){
+		if(evt.target.className !== "check") return false;
+		console.log(evt.target);
+	});
+	//리스트 삭제
+	deleteButtonElement.addEventListener("click", function(evt){
+		if(evt.target.className !== "deleteButton") return false;
+		
 
+		//로컬스토리지 삭제
+		  // 전체 스토리지 검색
+		  // 스토리지에 맞는 키값 반환
+		  // 해당 키값으로 로컬스토리지 삭제
+		  // 삭제 된 리스트의 뒤의 키값 재정렬
+
+		//해당 리스트 삭제
+	});
 }
 
 
 function setNewTodoList(listElement, tempText, tempDate){
-	var setString = '<li><input type="checkbox" name="check" class="check">' + tempText + '<input type="date" name="done" class="done" value="' + tempDate + '"></li>';
+	var setString = '<li><div class="list"><input type="checkbox" name="check" class="check">' + tempText + '<input type="date" name="done" class="done" value="' + tempDate + '"><button class="deleteButton">delete</button></div></li>';
 	listElement.insertAdjacentHTML('beforeend', setString);
 	return true;
 }
@@ -123,7 +138,7 @@ function insertStorageData(listElement, storageData, tempKeyString){
 		// if(tempChecked === "true") var tempCheckBoolean = true;
 		// else var tempCheckBoolean = 0;
 		var tempDate = window.localStorage.getItem(tempKey).replace(/.+\/.+\/(\d+-\d+-\d+)/,"$1")
-		var tempHTML = '<li><input type="checkbox" name="check" class="check" checked="">' + tempString + '<input type="date" name="done" class="done" value="' + tempDate + '"></li>';
+		var tempHTML = '<li class="listText"><div class="list"><input type="checkbox" name="check" class="check" checked="">' + tempString + '<input type="date" name="done" class="done" value="' + tempDate + '"><button class="deleteButton">delete</button></div></li>';
 		listElement.insertAdjacentHTML("beforeend",tempHTML);
 	}
 	// test = true/테스트4/2017-04-04
