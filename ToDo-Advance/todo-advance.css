@@ -1,10 +1,16 @@
+html{
+    background-image:url("El Capitan.jpg");
+    background-size: cover;
+    // no-repeat center center fixed;    
+    //color:rgba(128,128,128,1);
+}
 .wrapper{
     position:relative;
     left:0%;
     height:auto;
     top:10px;
-    border:solid gray;
-    background-image:url("El Capitan.jpg");
+    border:solid rgba(128,128,128,0);
+    //background-image:url("El Capitan.jpg");
 }
 /*. TOP 부분. 제목 */
 .todo-top{
@@ -52,13 +58,14 @@ ul{
     background-color: rgba(255,255,255,1);
     margin: 10px 10px 10px 10px;
     border-radius: 20px;
+    padding-top: 10px;
 }
 .check{
     //appearance:none;
     //font-size: 4rem;
     //cursor: pointer;
     //box-sizing: border-box;
-    top:5px;
+    //top:5px;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
@@ -79,18 +86,27 @@ ul{
   outline: 0 none;
   box-shadow: none;
 }
+.mid-text{
+    position:relative;
+    margin: 0px;
+}
 .done{
     position: relative;
     margin-left: 10px;
+    //margin-bottom: 15px;
+    //padding-bottom: 20px;
+    bottom: 5px;
     font-size: 2rem;
     background-color: rgba(255, 255, 255, 0);
     //opacity:0.1;
-    border:none;
+    border: none;
+    //border: solid black;
+    //top:5px;
 }
 .deleteButton{
     position: relative;
     float:right;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-right: 10px;
     font-size: 1rem;
     //background-color: #000066;
@@ -125,7 +141,7 @@ ul{
     width: 20%;
     float:left;
     //left:30%;
-    height:50px;
+    height:52px;
     font-size: 2rem;
     margin: 5px 5px 5px 5px;
 }
@@ -136,7 +152,7 @@ ul{
     float:left;
     //top:2px;
     //left:20%;
-    height: 50px;
+    height: 56px;
     font-size: 1.5rem;
     margin: 5px 5px 5px 5px;
 }
@@ -148,6 +164,7 @@ ul{
     top:10px;
     text-align: center;
     font-size:2rem;
+    color:rgba(128,128,128,1);
 }
 
 
@@ -162,7 +179,7 @@ ul{
     background-color:#ffffff;
     //border:solid gray;
     font-size:2rem;
-    transition:all 1s;
+    transition:all 0.5s;
     overflow-x: hidden;
 }
 .navIcon{
@@ -175,7 +192,7 @@ ul{
 .navA{
     display:block;
     margin-left:45px;
-    transition: all as;
+    transition: all 0.5s;
 }
 .closeMenu{
     cursor:pointer;

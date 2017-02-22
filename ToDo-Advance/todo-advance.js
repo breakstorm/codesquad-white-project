@@ -68,6 +68,7 @@ function init(){
 		console.log(evt.target);
 	});
 	//리스트 삭제
+	/*
 	deleteButtonElement.addEventListener("click", function(evt){
 		if(evt.target.className !== "deleteButton") return false;
 		
@@ -79,7 +80,7 @@ function init(){
 		  // 삭제 된 리스트의 뒤의 키값 재정렬
 
 		//해당 리스트 삭제
-	});
+	});*/
 }
 
 

@@ -52,19 +52,19 @@ function staticInit(){
         labels:dateStruct.labelData,
         datasets: [{
                     label: '전체',
-                    backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                    backgroundColor: color(window.chartColors.red).alpha(0.8).rgbString(),
                     borderColor: window.chartColors.red,
                     borderWidth: 1,
                     data: dateStruct.listCount
                 }, {
                     label: '완료',
-                    backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                    backgroundColor: color(window.chartColors.blue).alpha(0.8).rgbString(),
                     borderColor: window.chartColors.blue,
                     borderWidth: 1,
                     data: dateStruct.listCountDone
                 }, {
                     label: '미완료',
-                    backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+                    backgroundColor: color(window.chartColors.green).alpha(0.8).rgbString(),
                     borderColor: window.chartColors.green,
                     borderWidth: 1,
                     data: dateStruct.listCountMiss
