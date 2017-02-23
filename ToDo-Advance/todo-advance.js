@@ -1,16 +1,3 @@
-/* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
-// function openNav() {
-//     document.getElementById("mySidenav").style.width = "250px";
-//     document.getElementById("main").style.marginLeft = "250px";
-//     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-// }
-
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
-// function closeNav() {
-//     document.getElementById("mySidenav").style.width = "0";
-//     document.getElementById("main").style.marginLeft = "0";
-//     document.body.style.backgroundColor = "white";
-// }
 
 document.querySelector(".top-menuButton").addEventListener("click",function(evt){
 	document.querySelector(".sideNavigation").style.width = "250px";
@@ -24,11 +11,13 @@ document.addEventListener("DOMContentLoaded", function(evt){
 	init();
 });
 
+
 function init(){
 	var listElement = document.querySelector("ul");
 	var inputTextElement = document.querySelector("textarea")
 	var inputDateElement = document.querySelector(".inputDone");
 	var inputButtonElement = document.querySelector(".inputButton");
+	var smallListElement = document.querySelector(".list");
 	var deleteButtonElement = document.querySelector(".deleteButton");
 	var midElement = document.querySelector(".todo-mid");
 
@@ -67,22 +56,57 @@ function init(){
 		if(evt.target.className !== "check") return false;
 		console.log(evt.target);
 	});
-	//리스트 삭제
-	/*
-	deleteButtonElement.addEventListener("click", function(evt){
-		if(evt.target.className !== "deleteButton") return false;
-		
-
-		//로컬스토리지 삭제
-		  // 전체 스토리지 검색
-		  // 스토리지에 맞는 키값 반환
-		  // 해당 키값으로 로컬스토리지 삭제
-		  // 삭제 된 리스트의 뒤의 키값 재정렬
-
+	listElement.addEventListener("click", function(evt){
 		//해당 리스트 삭제
-	});*/
+		if(evt.target.className === "deleteButton"){
+			var keyText = evt.target.previousSibling.previousSibling.data;
+			//컨텍스트의 텍스트값 로컬스토리지 검색
+			var keyIndex = searchLocalStorage(keyString, keyStringNumber, keyText);
+			var controlIndex = parseInt(keyIndex.replace(/.+(\d+)/,"$1"));
+			//로컬스토리지 컨텍스트값 삭제
+			window.localStorage.removeItem(keyIndex);
+			//로컬스토리지 재정렬
+			rearrangeLocalStorage(keyString, keyStringNumber ,keyIndex, controlIndex);
+			keyStringNumber = window.localStorage.getItem(keyString);
+			//웹페이지 컨텍스트 삭제
+			listElement.removeChild(evt.target.parentElement.parentElement);
+		}
+		//리스트 수정
+	})
 }
 
+function rearrangeLocalStorage(tempKeyString, tempKeyStringNumber, tempKeyIndex, tempControlIndex){
+	//시작값 = 컨트롤값+1 ~ tempKeyStringNumber -2
+	//셋.로컬스토리지 ...
+	//removeItem(tempKeyStringNumber)
+	var tempValue;
+	var tempKey;
+	//0~11 일때 9까지조회
+	for(i = tempControlIndex+1; i < tempKeyStringNumber; i++){
+		tempKey = tempKeyString+i;
+		tempValue = window.localStorage.getItem(tempKey);
+		tempKey = tempKeyString + (i-1);
+		window.localStorage.setItem(tempKey, tempValue);
+	}
+	tempKey = tempKeyString+(tempKeyStringNumber-1);
+	window.localStorage.removeItem(tempKey);
+	window.localStorage.setItem(tempKeyString, tempKeyStringNumber-1);
+}
+
+function searchLocalStorage(tempKeyString, tempKeyStringNumber, keyText){
+	//var temp;
+	var tempKey;
+	var controlText;
+	var rawText;
+	//var length = tempKeyStringNumber;
+	for(i=0; i < tempKeyStringNumber; i++){
+		tempKey = tempKeyString + i;
+		rawText = window.localStorage.getItem(tempKey);
+		controlText = rawText.replace(/.+\/(.+)\/\d+-\d+-\d+/,"$1");
+		if(keyText === controlText) break;
+	}
+	return tempKey;
+}
 
 function setNewTodoList(listElement, tempText, tempDate){
 	var setString = '<li><div class="list"><input type="checkbox" name="check" class="check">' + tempText + '<input type="date" name="done" class="done" value="' + tempDate + '"><button class="deleteButton">delete</button></div></li>';
